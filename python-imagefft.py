@@ -22,24 +22,15 @@ def save_image(magnitude, filename):
 
 def make_plot(src, magnitude, filename=None):
 	plt.clf()
-	plt.subplot(131)
-	plt.imshow(src, cmap=plt.cm.jet)
+	plt.subplot(121)
+	plt.imshow(src, cmap=plt.cm.gray, extent=[0,1,0,1])
 	plt.title('Original Image')
-	plt.subplot(132)
-	plt.imshow(magnitude, cmap=plt.cm.jet)
-	plt.title('FFT (linear scale)')
-	plt.subplot(133)
+	plt.subplot(122)
 	offset = (np.max(magnitude) - np.min(magnitude)) / 255 / 5
-	plt.imshow(np.log10(magnitude + offset), cmap=plt.cm.jet)
+	plt.imshow(np.log10(magnitude + offset), cmap=plt.cm.gray, extent=[0,1,0,1])
 	plt.title('FFT (log scale)')
 	if filename is not None: 
-		plt.savefig(filename, figsize=(10, 5), dpi=120, bbox_inches='tight')
+		plt.savefig(filename, bbox_inches='tight')
 
 src, magnitude = transform('octagon.png', inverse=False, shift=False)
 make_plot(src, magnitude, filename='octagon_transformed.pdf')
-
-src, magnitude = transform('hexagon.png', inverse=False, shift=False)
-make_plot(src, magnitude, filename='hexagon_transformed.pdf')
-
-src, magnitude = transform('circle.png', inverse=False, shift=False)
-make_plot(src, magnitude, filename='circle_transformed.pdf')
